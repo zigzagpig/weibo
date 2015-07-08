@@ -33,6 +33,6 @@ class StaticPagesControllerTest < ActionController::TestCase
   test "should get test" do
     get :test
     assert_response :success
-    assert_select "title", "Test"
+    assert_select "title", "我爱吃饭"
   end
 end
