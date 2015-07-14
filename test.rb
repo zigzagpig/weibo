@@ -1,3 +1,8 @@
+bb = "a" * 5
+puts bb
+
+
+
 def string_shuffle(s)
 	s.split('').shuffle.join
 end

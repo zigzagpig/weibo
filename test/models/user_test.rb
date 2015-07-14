@@ -6,8 +6,16 @@ class UserTest < ActiveSupport::TestCase
   # end
 
   def setup
-  	@user = User.new(name: "douyu", email: "zigzagpig@douyu.com")
+  	@user = User.new(name: "douyu",
+                     email: "zigzagpig@douyu.com",
+                     password: "douyu123",
+                     password_confirmation: "douyu123")
   end
+
+  # def setup
+  #   @user = User.new(name: "Example User", email: "user@example.com",
+  #                        password: "foobar", password_confirmation: "foobar")
+  # end
 
   test "验证用户有效性" do
   	assert @user.valid?
@@ -62,5 +70,10 @@ class UserTest < ActiveSupport::TestCase
   	@user.save
   	assert_not duplicate_user.valid?
 	end
+
+  test "密码最小长度不低于6字符" do
+    @user.password = @user.password_confirmation = "a" * 5
+    assert_not @user.valid?
+  end
 
 end
