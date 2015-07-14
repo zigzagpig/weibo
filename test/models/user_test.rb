@@ -12,11 +12,6 @@ class UserTest < ActiveSupport::TestCase
                      password_confirmation: "douyu123")
   end
 
-  # def setup
-  #   @user = User.new(name: "Example User", email: "user@example.com",
-  #                        password: "foobar", password_confirmation: "foobar")
-  # end
-
   test "验证用户有效性" do
   	assert @user.valid?
   end
@@ -57,7 +52,9 @@ class UserTest < ActiveSupport::TestCase
     												user_at_foo.org
     												user.name@example.
                             foo@bar_baz.com
-                            foo@bar+baz.com ]
+                            foo@bar+baz.com
+                            douyu123@happyending....com
+                            foo@bar..com ]
 		invalid_addresses.each do |invalid_address|
 			@user.email = invalid_address
 			assert_not @user.valid?, "#{invalid_address.inspect} 这个Email地址是错的，但却通过了验证"
@@ -74,6 +71,13 @@ class UserTest < ActiveSupport::TestCase
   test "密码最小长度不低于6字符" do
     @user.password = @user.password_confirmation = "a" * 5
     assert_not @user.valid?
+  end
+
+  test "电子邮件小写转换" do
+    mixed_case_email = "DouYu@Yahoo.com"
+    @user.email = mixed_case_email
+    @user.save
+    assert_equal mixed_case_email.downcase, @user.reload.email
   end
 
 end
